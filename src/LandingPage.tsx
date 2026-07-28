@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Download,
   Sparkles,
@@ -12,10 +12,13 @@ import {
   ChevronRight,
   Phone,
   Heart,
-  Globe
+  Globe,
+  X,
+  Mail
 } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
+  const [activeLegalModal, setActiveLegalModal] = useState<'privacy' | 'terms' | 'about' | null>(null);
   const apkDownloadUrl = '/app-debug.apk'; // Direct link to APK download asset or release endpoint
 
   const handleDownload = () => {
@@ -374,7 +377,7 @@ export const LandingPage: React.FC = () => {
 
       {/* Sansthan Independent Legal Disclaimer Footer */}
       <footer className="bg-white border-t border-[#F0E6DD] py-10 px-4 lg:px-12 text-center space-y-4">
-        <div className="max-w-4xl mx-auto space-y-3">
+        <div className="max-w-4xl mx-auto space-y-4">
           
           <div className="flex flex-col items-center justify-center gap-2">
             <img src="/logo.png" alt="Tirtho Official Logo" className="h-16 sm:h-20 w-auto object-contain drop-shadow-md" />
@@ -386,12 +389,178 @@ export const LandingPage: React.FC = () => {
             Tirtho is an independent AI-powered Yatra guide application created solely for the convenience of visiting devotees. This website and app have <strong>NO official connection, affiliation, or authorization with Shri Gajanan Maharaj Sansthan, Shegaon</strong>. All temple names and trademarks belong to their respective authorities.
           </div>
 
+          {/* Smart Legal Footer Links */}
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-black text-gray-700 pt-3 border-t border-gray-100">
+            <button 
+              onClick={() => setActiveLegalModal('privacy')}
+              className="hover:text-[#E66A17] transition-colors flex items-center gap-1.5 active:scale-95"
+            >
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <span>Privacy Policy</span>
+            </button>
+
+            <span className="text-gray-300">•</span>
+
+            <button 
+              onClick={() => setActiveLegalModal('terms')}
+              className="hover:text-[#E66A17] transition-colors flex items-center gap-1.5 active:scale-95"
+            >
+              <span>📜</span>
+              <span>Terms & Conditions</span>
+            </button>
+
+            <span className="text-gray-300">•</span>
+
+            <button 
+              onClick={() => setActiveLegalModal('about')}
+              className="hover:text-[#E66A17] transition-colors flex items-center gap-1.5 active:scale-95"
+            >
+              <span>ℹ️</span>
+              <span>About Tirtho</span>
+            </button>
+          </div>
+
           <p className="text-xs text-gray-500 font-semibold pt-2">
             © {new Date().getFullYear()} Tirtho App. Crafted with devotion for Shegaon pilgrims.
           </p>
 
         </div>
       </footer>
+
+      {/* Website Legal Modals Overlay */}
+      {activeLegalModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-6 shadow-2xl relative animate-scaleUp text-left">
+            <button
+              onClick={() => setActiveLegalModal(null)}
+              className="absolute top-5 right-5 w-9 h-9 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-gray-200 active:scale-95 transition-all"
+              title="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* PRIVACY POLICY MODAL */}
+            {activeLegalModal === 'privacy' && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 border-b border-gray-100 pb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-black">
+                    <ShieldCheck className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif font-black text-xl text-gray-900">Privacy Policy</h3>
+                    <p className="text-xs font-bold text-emerald-600 uppercase tracking-wider">DPDP Act 2023 Compliant</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 text-xs text-gray-700 leading-relaxed font-medium">
+                  <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-950 font-bold">
+                    Effective Date: January 2026 • Last Updated: July 2026
+                  </div>
+                  
+                  <h4 className="font-black text-gray-900 text-sm">1. Introduction & Data Protection Commitment</h4>
+                  <p>
+                    Tirtho ("we", "our", or "us") is dedicated to providing smart spiritual navigation for pilgrims visiting holy sites across India, starting with Shegaon, Maharashtra. We respect your privacy and are committed to protecting your personal data in full compliance with India's Digital Personal Data Protection (DPDP) Act, 2023.
+                  </p>
+
+                  <h4 className="font-black text-gray-900 text-sm">2. Information We Collect</h4>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li><strong>Basic Profile Data:</strong> Name, Email address, and phone number (if provided for account registration).</li>
+                    <li><strong>Location Data:</strong> Approximate or precise GPS location strictly used for real-time map navigation and nearest spot discovery.</li>
+                    <li><strong>Usage Data:</strong> Anonymous analytics to improve app response speed and Madhav AI recommendations.</li>
+                  </ul>
+
+                  <h4 className="font-black text-gray-900 text-sm">3. How We Use Your Data</h4>
+                  <p>
+                    Your data is strictly utilized to provide live queue estimates, personalized yatra itineraries, multi-lingual AI assistance, and verified local stay/food spot recommendations. We NEVER sell or monetize user data.
+                  </p>
+
+                  <h4 className="font-black text-gray-900 text-sm">4. Contact Privacy Officer</h4>
+                  <p>For any privacy queries or data deletion requests, email us at: <strong className="text-emerald-700">privacy@tirtho.app</strong></p>
+                </div>
+              </div>
+            )}
+
+            {/* TERMS & CONDITIONS MODAL */}
+            {activeLegalModal === 'terms' && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 border-b border-gray-100 pb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-orange-100 text-[#E66A17] flex items-center justify-center font-black text-xl">
+                    📜
+                  </div>
+                  <div>
+                    <h3 className="font-serif font-black text-xl text-gray-900">Terms & Conditions</h3>
+                    <p className="text-xs font-bold text-[#E66A17] uppercase tracking-wider">User Agreement & Service Terms</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 text-xs text-gray-700 leading-relaxed font-medium">
+                  <div className="p-3 bg-orange-50 border border-orange-200 rounded-2xl text-orange-950 font-bold">
+                    Please read these terms carefully before using Tirtho platform.
+                  </div>
+
+                  <h4 className="font-black text-gray-900 text-sm">1. Independent Service Disclaimer</h4>
+                  <p>
+                    Tirtho is an independent private technology platform designed for pilgrim welfare. We maintain no official affiliation or endorsement with Shri Gajanan Maharaj Sansthan or any government temple trust.
+                  </p>
+
+                  <h4 className="font-black text-gray-900 text-sm">2. Real-Time Information Accuracy</h4>
+                  <p>
+                    Crowd wait times, Prasadalaya schedules, and local transport details are estimated based on pilgrim contributions and real-time feeds. Devotees are advised to verify timings locally during peak festivals.
+                  </p>
+
+                  <h4 className="font-black text-gray-900 text-sm">3. Acceptable Code of Conduct</h4>
+                  <p>
+                    Users must respect local temple etiquette, cultural sanctity, and avoid posting misleading reviews or harmful content on the platform.
+                  </p>
+
+                  <h4 className="font-black text-gray-900 text-sm">4. Legal Contact</h4>
+                  <p>For legal inquiries: <strong className="text-[#E66A17]">legal@tirtho.app</strong></p>
+                </div>
+              </div>
+            )}
+
+            {/* ABOUT US MODAL */}
+            {activeLegalModal === 'about' && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 border-b border-orange-100 pb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#E66A17] to-[#FBBF24] text-white flex items-center justify-center font-serif font-black text-2xl shadow-md">
+                    T
+                  </div>
+                  <div>
+                    <h3 className="font-serif font-black text-xl text-gray-900">ABOUT TIRTHO</h3>
+                    <p className="text-xs font-black text-[#E66A17] uppercase tracking-wider">YOUR GUIDE. YOUR YATRA.</p>
+                  </div>
+                </div>
+
+                <div className="p-3.5 bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50 border border-orange-200 rounded-2xl text-amber-950 font-serif font-bold text-center text-xs">
+                  "Serving Pilgrims with Devotion, Empowering Yatras with Technology."
+                </div>
+
+                <div className="space-y-3 text-xs text-gray-700 leading-relaxed font-medium">
+                  <h4 className="font-black text-[#E66A17] text-xs uppercase tracking-wider">🌟 OUR STORY</h4>
+                  <p>
+                    Every year, millions of devoted pilgrims embark on sacred journeys across India to seek blessings, peace, and spiritual fulfillment. Tirtho was born out of a deep reverence for traditional pilgrimages and a passion for modern technology. Launched initially in the holy city of Shegaon, Maharashtra (the abode of Shri Sant Gajanan Maharaj), Tirtho bridges ancient sacred traditions with modern AI navigation.
+                  </p>
+
+                  <h4 className="font-black text-[#E66A17] text-xs uppercase tracking-wider">🚀 OUR MISSION & VISION</h4>
+                  <p>
+                    <strong>Mission:</strong> To transform and simplify the pilgrimage experience for millions of devotees by providing real-time information, AI assistance, and seamless local service discovery.<br />
+                    <strong>Vision:</strong> To become India’s most trusted smart spiritual tourism platform empowering pilgrims across every sacred dham.
+                  </p>
+
+                  <div className="p-4 bg-gray-50 border border-gray-200 rounded-2xl space-y-1 text-[11px]">
+                    <p>🌐 <strong>Official Website:</strong> https://tirtho.app</p>
+                    <p>✉️ <strong>General Inquiries:</strong> hello@tirtho.app / support@tirtho.app</p>
+                    <p>📍 <strong>Launch Base:</strong> Shegaon, District Buldhana, Maharashtra - 444203, India.</p>
+                    <p className="pt-1 font-bold text-gray-900">Designed & Developed by Jaidev Joshi.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </div>
+        </div>
+      )}
 
     </div>
   );
