@@ -32,5 +32,4 @@ dist-ssr
 android/.gradle
 android/app/build
 android/build
-*.apk
 .vercel
