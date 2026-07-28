@@ -19,7 +19,7 @@ import {
 
 export const LandingPage: React.FC = () => {
   const [activeLegalModal, setActiveLegalModal] = useState<'privacy' | 'terms' | 'about' | null>(null);
-  const apkDownloadUrl = '/Tirtho_v1.0_Debug.apk'; // Direct link to APK download asset
+  const apkDownloadUrl = 'https://raw.githubusercontent.com/jaidevjoshi47/Landing-tirtho/main/public/Tirtho_v1.0_Debug.apk'; // Direct high-speed GitHub Fastly CDN binary link
   const handleDownload = () => {
     // Triggers direct browser APK download
     const link = document.createElement('a');
