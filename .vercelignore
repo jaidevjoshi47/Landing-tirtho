@@ -1,0 +1,8 @@
+node_modules
+.git
+.idea
+*.apk
+public/*.apk
+dist/*.apk
+.vercel/output/static/*.apk
+.vercel/output/static/app-debug.apk

@@ -7,8 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# node_modules
-# dist-ssr
+node_modules
+dist
+dist-ssr
 *.local
 
 # Editor directories and files
@@ -32,3 +33,4 @@ android/.gradle
 android/app/build
 android/build
 *.apk
+.vercel
