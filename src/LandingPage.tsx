@@ -19,13 +19,12 @@ import {
 
 export const LandingPage: React.FC = () => {
   const [activeLegalModal, setActiveLegalModal] = useState<'privacy' | 'terms' | 'about' | null>(null);
-  const apkDownloadUrl = '/app-debug.apk'; // Direct link to APK download asset or release endpoint
-
+  const apkDownloadUrl = '/Tirtho_v1.0_Debug.apk'; // Direct link to APK download asset
   const handleDownload = () => {
     // Triggers direct browser APK download
     const link = document.createElement('a');
     link.href = apkDownloadUrl;
-    link.download = 'Tirtho-Shegaon-Yatra-v1.0.4.apk';
+    link.download = 'Tirtho_v1.0_Debug.apk';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
