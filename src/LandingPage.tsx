@@ -37,7 +37,7 @@ export const LandingPage: React.FC = () => {
   const [bhaskarState, setBhaskarState] = useState<'greeting' | 'talking' | 'thinking' | 'idle'>('greeting');
   const [activePlaceIndex, setActivePlaceIndex] = useState<number>(0);
 
-  const apkDownloadUrl = '/Tirtho_v1.0_Debug.apk'; // Direct relative link to hosted APK asset
+  const apkDownloadUrl = '/Tirtho_v1.0_Expo_Release.apk'; // Direct relative link to Expo Release APK asset
   
   const handleDownload = () => {
     // Triggers direct browser APK download
@@ -719,7 +719,7 @@ export const LandingPage: React.FC = () => {
                 📱
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-[#163A6B]">Tirtho_v1.0_Debug.apk</h3>
+                <h3 className="font-extrabold text-base text-[#163A6B]">Tirtho_v1.0_Expo_Release.apk</h3>
                 <p className="text-xs text-[#2F5F9F] font-semibold mt-0.5">
                   Size: ~78.5 MB • Requirements: Android 7.0+ (ARM64)
                 </p>
