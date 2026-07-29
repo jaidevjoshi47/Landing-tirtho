@@ -2,15 +2,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #E66A17;
-  --color-primary-light: #FDF4EB;
-  --color-background: #FCFBFA;
+  --color-primary: #F7941D;
+  --color-primary-hover: #E66A00;
+  --color-secondary: #163A6B;
+  --color-secondary-light: #2F5F9F;
+  --color-background: #FFFDF9;
   --color-surface: #FFFFFF;
-  --color-text-primary: #2C1E16;
-  --color-text-secondary: #756960;
-  --color-border: #EAE0D5;
-  --color-success: #2F8F46;
-  --color-brand-blue: #1a237e;
+  --color-section: #FFF7EB;
+  --color-gold: #F4B400;
 
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -27,56 +26,18 @@
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-text-primary);
-  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #FFFDF9;
+  color: #163A6B;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-}
-
-@utility animate-glow-ring-1 {
-  animation: glow-ring-1 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@utility animate-glow-ring-2 {
-  animation: glow-ring-2 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @utility animate-float-gentle {
   animation: float-gentle 3s ease-in-out infinite;
 }
 
-@utility animate-shimmer-fast {
-  animation: shimmer-fast 4s linear infinite;
-}
-
 @utility animate-slide-up {
   animation: slideUp 0.3s ease-out forwards;
-}
-
-@keyframes glow-ring-1 {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.8;
-    box-shadow: 0 0 20px 4px rgba(230, 106, 23, 0.4);
-  }
-  50% {
-    transform: scale(1.15);
-    opacity: 0.3;
-    box-shadow: 0 0 35px 12px rgba(230, 106, 23, 0.2);
-  }
-}
-
-@keyframes glow-ring-2 {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.5;
-    box-shadow: 0 0 30px 8px rgba(251, 191, 36, 0.3);
-  }
-  50% {
-    transform: scale(1.25);
-    opacity: 0;
-    box-shadow: 0 0 45px 18px rgba(251, 191, 36, 0.1);
-  }
 }
 
 @keyframes float-gentle {
@@ -85,15 +46,6 @@ body {
   }
   50% {
     transform: translateY(-4px);
-  }
-}
-
-@keyframes shimmer-fast {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
   }
 }
 
@@ -118,4 +70,3 @@ body {
 .leaflet-bottom {
   z-index: 2 !important;
 }
-
