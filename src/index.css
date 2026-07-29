@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -10,63 +10,152 @@
   --color-surface: #FFFFFF;
   --color-section: #FFF7EB;
   --color-gold: #F4B400;
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes scaleUp {
-    from { transform: scale(0.95); }
-    to { transform: scale(1); }
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background-color: #FFFDF9;
   color: #163A6B;
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-@utility animate-float-gentle {
-  animation: float-gentle 3s ease-in-out infinite;
-}
+/* --- Cinematic & Motion Utility Animations --- */
 
-@utility animate-slide-up {
-  animation: slideUp 0.3s ease-out forwards;
-}
-
-@keyframes float-gentle {
+/* Sunlight Ray Glow Sweep */
+@keyframes sunbeam-sweep {
   0%, 100% {
-    transform: translateY(0);
+    opacity: 0.4;
+    transform: rotate(-12deg) scale(1) translateY(0);
   }
   50% {
-    transform: translateY(-4px);
+    opacity: 0.7;
+    transform: rotate(-8deg) scale(1.08) translateY(-10px);
   }
 }
 
-/* Leaflet Map Tailwind v4 Fixes */
-.leaflet-container {
-  width: 100% !important;
-  height: 100% !important;
-  z-index: 1;
+/* Ambient Floating Particles */
+@keyframes particle-rise {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.8);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.6;
+  }
+  80% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-120px) translateX(25px) scale(1.2);
+    opacity: 0;
+  }
 }
 
-.leaflet-container img,
-.leaflet-tile-container img,
-.leaflet-tile {
-  max-width: none !important;
-  max-height: none !important;
+/* Floating Clouds Movement */
+@keyframes cloud-drift {
+  0% {
+    transform: translateX(-5%);
+  }
+  50% {
+    transform: translateX(5%);
+  }
+  100% {
+    transform: translateX(-5%);
+  }
 }
 
-.leaflet-pane {
-  z-index: 1 !important;
+/* Avatar Breathing Animation */
+@keyframes breathing-idle {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.02);
+  }
 }
-.leaflet-top,
-.leaflet-bottom {
-  z-index: 2 !important;
+
+/* Avatar Blinking Animation */
+@keyframes avatar-blink {
+  0%, 94%, 98%, 100% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 0.3;
+  }
+}
+
+/* Pulse Ripple for Map Location Markers */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(247, 148, 29, 0.6);
+  }
+  70% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 16px rgba(247, 148, 29, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(247, 148, 29, 0);
+  }
+}
+
+/* Shimmer Light Reflection */
+@keyframes shimmer-glow {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-sunbeam {
+  animation: sunbeam-sweep 12s ease-in-out infinite;
+}
+
+.animate-cloud-drift {
+  animation: cloud-drift 24s ease-in-out infinite;
+}
+
+.animate-avatar-breath {
+  animation: breathing-idle 4s ease-in-out infinite;
+}
+
+.animate-avatar-blink {
+  animation: avatar-blink 6s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.shimmer-bg {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(247, 148, 29, 0.15) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-glow 3.5s infinite;
+}
+
+/* 3D Tilt & Card Perspective Helper */
+.card-perspective {
+  perspective: 1000px;
+}
+
+.tilt-inner {
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transform-style: preserve-3d;
+}
+
+.tilt-inner:hover {
+  transform: rotateX(3deg) rotateY(-3deg) translateZ(10px);
 }

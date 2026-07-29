@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Download,
   Sparkles,
@@ -23,11 +24,18 @@ import {
   Headphones,
   Lock,
   Landmark,
-  Hotel
+  Hotel,
+  Volume2,
+  MessageSquare,
+  Zap,
+  Check,
+  Eye
 } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
   const [activeLegalModal, setActiveLegalModal] = useState<'privacy' | 'terms' | 'about' | null>(null);
+  const [bhaskarState, setBhaskarState] = useState<'greeting' | 'talking' | 'thinking' | 'idle'>('greeting');
+  const [activePlaceIndex, setActivePlaceIndex] = useState<number>(0);
 
   const apkDownloadUrl = 'https://raw.githubusercontent.com/jaidevjoshi47/Landing-tirtho/main/public/Tirtho_v1.0_Debug.apk'; // Direct high-speed GitHub Fastly CDN binary link
   
@@ -41,11 +49,51 @@ export const LandingPage: React.FC = () => {
     document.body.removeChild(link);
   };
 
+  // Bhaskar AI state dialogue text
+  const getBhaskarDialogue = () => {
+    switch (bhaskarState) {
+      case 'greeting':
+        return '“Jai Gajanan! 🙏 Main Bhaskar AI hoon. Shegaon Yatra mein aapki kya sahayata karoon?”';
+      case 'talking':
+        return '“Subah Kakad Aarti 5:30 AM ko hoti hai. Sansthan Prasadalaya mein 11:30 AM se Mahaprasad shuru hota hai!”';
+      case 'thinking':
+        return '“Aapke liye sabse kam crowd wala darshan time calculate kar raha hoon... ⏳”';
+      case 'idle':
+        return '“Anand Sagar fountain show shaam 6:30 PM ko shuru hota hai. Abhi plan banayein!”';
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#FFFDF9] text-[#163A6B] font-['Plus_Jakarta_Sans',sans-serif] selection:bg-[#F7941D] selection:text-white">
+    <div className="min-h-screen bg-[#FFFDF9] text-[#163A6B] font-['Plus_Jakarta_Sans',sans-serif] selection:bg-[#F7941D] selection:text-white relative overflow-hidden">
       
+      {/* Cinematic Sunlight Ray Sweep Ambient Background */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-[#F4B400]/15 via-[#F7941D]/10 to-transparent rounded-full blur-3xl pointer-events-none -z-10 animate-sunbeam" />
+      <div className="absolute top-1/3 -left-40 w-[600px] h-[600px] bg-gradient-to-tr from-[#FFF7EB] via-[#F7941D]/5 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+
+      {/* Floating Ambient Dust Particles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
+        {[...Array(12)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full bg-[#F4B400]/30 blur-[1px]"
+            style={{
+              width: `${Math.random() * 6 + 3}px`,
+              height: `${Math.random() * 6 + 3}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animation: `particle-rise ${8 + Math.random() * 10}s infinite ease-in-out ${Math.random() * 5}s`
+            }}
+          />
+        ))}
+      </div>
+
       {/* 1. Header Navigation Bar */}
-      <nav className="sticky top-0 z-50 bg-[#FFFFFF]/95 backdrop-blur-md border-b border-[#F7941D]/20 px-4 lg:px-10 py-3 shadow-[0_2px_15px_rgba(247,148,29,0.06)]">
+      <motion.nav 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.165, 0.84, 0.44, 1] }}
+        className="sticky top-0 z-50 bg-[#FFFFFF]/90 backdrop-blur-md border-b border-[#F7941D]/20 px-4 lg:px-10 py-3 shadow-[0_4px_20px_rgba(247,148,29,0.06)]"
+      >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
           {/* Logo & Tagline */}
@@ -62,43 +110,65 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Original Navigation Links */}
-          <div className="hidden md:flex items-center gap-7 text-xs font-extrabold text-[#163A6B]">
-            <a href="#features" className="hover:text-[#F7941D] transition-colors">Features</a>
-            <a href="#places" className="hover:text-[#F7941D] transition-colors">Tourist Spots</a>
-            <a href="#planner" className="hover:text-[#F7941D] transition-colors">AI Trip Planner</a>
-            <a href="#download" className="hover:text-[#F7941D] transition-colors">Download APK</a>
+          <div className="hidden md:flex items-center gap-8 text-xs font-extrabold text-[#163A6B]">
+            <a href="#features" className="relative group py-1">
+              <span className="group-hover:text-[#F7941D] transition-colors">Features</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#F7941D] group-hover:w-full transition-all duration-300 rounded-full" />
+            </a>
+            <a href="#places" className="relative group py-1">
+              <span className="group-hover:text-[#F7941D] transition-colors">Tourist Spots</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#F7941D] group-hover:w-full transition-all duration-300 rounded-full" />
+            </a>
+            <a href="#planner" className="relative group py-1">
+              <span className="group-hover:text-[#F7941D] transition-colors">AI Trip Planner</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#F7941D] group-hover:w-full transition-all duration-300 rounded-full" />
+            </a>
+            <a href="#download" className="relative group py-1">
+              <span className="group-hover:text-[#F7941D] transition-colors">Download APK</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#F7941D] group-hover:w-full transition-all duration-300 rounded-full" />
+            </a>
           </div>
 
           {/* Action Buttons (Right) */}
           <div className="flex items-center gap-3">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
               onClick={handleDownload}
-              className="px-5 py-2.5 bg-gradient-to-r from-[#F7941D] to-[#E66A00] hover:from-[#E66A00] hover:to-[#F7941D] text-white font-black text-xs sm:text-sm rounded-full shadow-[0_4px_16px_rgba(247,148,29,0.35)] hover:shadow-[0_6px_20px_rgba(230,106,0,0.45)] hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2"
+              className="px-5 py-2.5 bg-gradient-to-r from-[#F7941D] to-[#E66A00] text-white font-black text-xs sm:text-sm rounded-full shadow-[0_4px_16px_rgba(247,148,29,0.35)] hover:shadow-[0_6px_20px_rgba(230,106,0,0.45)] transition-all flex items-center gap-2"
             >
               <Download className="w-4 h-4 stroke-[2.5px]" />
               <span>Download APK</span>
-            </button>
+            </motion.button>
           </div>
 
         </div>
-      </nav>
+      </motion.nav>
 
       {/* 2. Hero Section */}
       <section id="home" className="relative overflow-hidden pt-10 pb-16 px-4 lg:px-10 bg-gradient-to-b from-[#FFF7EB] via-[#FFFDF9] to-[#FFFDF9]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
           {/* Left Hero Column */}
-          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: [0.165, 0.84, 0.44, 1] }}
+            className="lg:col-span-7 space-y-6 text-center lg:text-left"
+          >
             
             {/* Badge Pill */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF7EB] border border-[#F7941D]/40 text-[#E66A00] text-xs font-black shadow-2xs">
-              <Sparkles className="w-4 h-4 fill-[#F4B400] text-[#F4B400]" />
+            <motion.div 
+              whileHover={{ scale: 1.03 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF7EB] border border-[#F7941D]/40 text-[#E66A00] text-xs font-black shadow-2xs cursor-default"
+            >
+              <Sparkles className="w-4 h-4 fill-[#F4B400] text-[#F4B400] animate-pulse" />
               <span>Your Spiritual Journey Starts Here</span>
-            </div>
+            </motion.div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-['Playfair_Display',serif] font-black text-[#163A6B] leading-[1.12]">
-              Experience <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F7941D] to-[#E66A00]">Shegaon</span><br />
+              Experience <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F7941D] via-[#E66A00] to-[#F4B400]">Shegaon</span><br />
               Like Never Before
             </h1>
 
@@ -107,76 +177,89 @@ export const LandingPage: React.FC = () => {
               Tirtho is your all-in-one guide for temples, hotels, food, routes, events and everything in Shegaon.
             </p>
 
-            {/* 3 Quick Highlight Cards */}
+            {/* 3 Quick Highlight Cards with 3D Lift */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-              <div className="flex items-center gap-3 p-3.5 bg-[#FFFFFF] border border-[#F7941D]/20 rounded-2xl shadow-[0_4px_15px_rgba(247,148,29,0.06)] text-left hover:border-[#F7941D] transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#FFF7EB] border border-[#F7941D]/30 text-[#F7941D] flex items-center justify-center flex-shrink-0">
-                  <Landmark className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-extrabold text-xs text-[#163A6B]">Sacred Temples</h4>
-                  <p className="text-[11px] text-[#2F5F9F] font-medium">Explore spiritual places</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 p-3.5 bg-[#FFFFFF] border border-[#F7941D]/20 rounded-2xl shadow-[0_4px_15px_rgba(247,148,29,0.06)] text-left hover:border-[#F7941D] transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#FFF7EB] border border-[#F7941D]/30 text-[#F7941D] flex items-center justify-center flex-shrink-0">
-                  <Navigation className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-extrabold text-xs text-[#163A6B]">Smart Routes</h4>
-                  <p className="text-[11px] text-[#2F5F9F] font-medium">Plan your perfect trip</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 p-3.5 bg-[#FFFFFF] border border-[#F7941D]/20 rounded-2xl shadow-[0_4px_15px_rgba(247,148,29,0.06)] text-left hover:border-[#F7941D] transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#FFF7EB] border border-[#F7941D]/30 text-[#F7941D] flex items-center justify-center flex-shrink-0">
-                  <Hotel className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-extrabold text-xs text-[#163A6B]">Stay & Food</h4>
-                  <p className="text-[11px] text-[#2F5F9F] font-medium">Best options, handpicked</p>
-                </div>
-              </div>
+              {[
+                { icon: Landmark, title: 'Sacred Temples', desc: 'Explore spiritual places' },
+                { icon: Navigation, title: 'Smart Routes', desc: 'Plan your perfect trip' },
+                { icon: Hotel, title: 'Stay & Food', desc: 'Best options, handpicked' }
+              ].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ y: -6, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex items-center gap-3 p-3.5 bg-[#FFFFFF] border border-[#F7941D]/20 rounded-2xl shadow-[0_4px_15px_rgba(247,148,29,0.06)] text-left hover:border-[#F7941D] transition-all cursor-pointer"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-[#FFF7EB] border border-[#F7941D]/30 text-[#F7941D] flex items-center justify-center flex-shrink-0">
+                    <item.icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-extrabold text-xs text-[#163A6B]">{item.title}</h4>
+                    <p className="text-[11px] text-[#2F5F9F] font-medium">{item.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
 
             {/* Primary Action Buttons */}
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.04, boxShadow: '0 12px 35px rgba(230,106,0,0.45)' }}
+                whileTap={{ scale: 0.96 }}
                 onClick={handleDownload}
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#F7941D] via-[#E66A00] to-[#F7941D] hover:from-[#E66A00] hover:to-[#F7941D] text-white font-black text-base rounded-full shadow-[0_8px_25px_rgba(247,148,29,0.4)] hover:shadow-[0_12px_30px_rgba(230,106,0,0.5)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
+                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#F7941D] via-[#E66A00] to-[#F7941D] text-white font-black text-base rounded-full shadow-[0_8px_25px_rgba(247,148,29,0.4)] transition-all flex items-center justify-center gap-3"
               >
                 <Download className="w-5 h-5 stroke-[2.5px]" />
                 <span>Download Android APK (v1.0.4)</span>
-              </button>
+              </motion.button>
 
-              <a
+              <motion.a
+                whileHover={{ scale: 1.02, backgroundColor: '#FFF7EB' }}
+                whileTap={{ scale: 0.96 }}
                 href="#download"
-                className="w-full sm:w-auto px-6 py-4 bg-[#FFFFFF] border border-[#2F5F9F]/30 text-[#163A6B] font-extrabold text-sm rounded-full hover:bg-[#FFF7EB] transition-all flex items-center justify-center gap-2 shadow-2xs"
+                className="w-full sm:w-auto px-6 py-4 bg-[#FFFFFF] border border-[#2F5F9F]/30 text-[#163A6B] font-extrabold text-sm rounded-full transition-all flex items-center justify-center gap-2 shadow-2xs"
               >
                 <span>Installation Guide</span>
                 <ChevronRight className="w-4 h-4 text-[#F7941D]" />
-              </a>
+              </motion.a>
             </div>
 
-          </div>
+            {/* Live Devotee Stat Badges */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 pt-3 text-xs font-extrabold text-[#163A6B]">
+              <div className="flex items-center gap-1.5">
+                <Star className="w-4 h-4 fill-[#F4B400] text-[#F4B400]" />
+                <span>4.9 / 5 Devotee Rating</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Globe className="w-4 h-4 text-[#2F5F9F]" />
+                <span>Hindi • Marathi • English</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <span>100% Free & Safe</span>
+              </div>
+            </div>
 
-          {/* Right Hero Image Column with Floating Overlay */}
-          <div className="lg:col-span-5 relative flex items-center justify-center">
+          </motion.div>
+
+          {/* Right Hero Image Column with Floating Overlay & Parallax Layers */}
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.165, 0.84, 0.44, 1] }}
+            className="lg:col-span-5 relative flex items-center justify-center card-perspective"
+          >
             
-            {/* Ambient Background Glow */}
-            <div className="absolute w-80 h-80 bg-gradient-to-tr from-[#F4B400]/30 to-[#F7941D]/20 rounded-full blur-3xl -z-10" />
-
-            {/* Main Temple Hero Frame */}
-            <div className="relative w-full rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(247,148,29,0.18)] border-4 border-[#FFFFFF] bg-[#FFFFFF]">
+            {/* Main Temple Hero Frame with Subtle 3D Tilt */}
+            <div className="tilt-inner relative w-full rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(247,148,29,0.18)] border-4 border-[#FFFFFF] bg-[#FFFFFF]">
               <img
                 src="/gajanan_temple.png"
                 alt="Shri Gajanan Maharaj Temple Shegaon"
-                className="w-full h-[360px] sm:h-[420px] object-cover object-center transform hover:scale-105 transition-transform duration-700"
+                className="w-full h-[360px] sm:h-[430px] object-cover object-center transform hover:scale-105 transition-transform duration-700"
               />
               
               {/* Soft Gradient Overlay at Temple Base */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#163A6B]/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#163A6B]/85 via-transparent to-transparent pointer-events-none" />
 
               {/* Bottom Caption on Temple Image */}
               <div className="absolute bottom-4 left-4 right-4 text-white space-y-1">
@@ -190,11 +273,15 @@ export const LandingPage: React.FC = () => {
               </div>
 
               {/* Floating Devotee Card Overlay (Top Right) */}
-              <div className="absolute top-4 right-4 bg-[#FFFFFF]/95 backdrop-blur-md border border-[#F7941D]/30 rounded-2xl p-2.5 shadow-xl flex items-center gap-3 max-w-[220px] animate-float-gentle">
+              <motion.div 
+                animate={{ y: [-4, 4, -4] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-4 right-4 bg-[#FFFFFF]/95 backdrop-blur-md border border-[#F7941D]/30 rounded-2xl p-2.5 shadow-xl flex items-center gap-3 max-w-[220px]"
+              >
                 <img
                   src="/bhaskar.png"
                   alt="Shri Gajanan Maharaj"
-                  className="w-11 h-11 rounded-xl object-cover border-2 border-[#F4B400] flex-shrink-0"
+                  className="w-11 h-11 rounded-xl object-cover border-2 border-[#F4B400] flex-shrink-0 animate-avatar-breath"
                 />
                 <div>
                   <h4 className="font-extrabold text-xs text-[#163A6B] leading-tight">Shri Gajanan Maharaj</h4>
@@ -203,20 +290,102 @@ export const LandingPage: React.FC = () => {
                     <span>🌸 50K+ Devotees</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
             </div>
 
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* 3. Interactive Bhaskar AI Voice Guide Showcase (New Motion Feature) */}
+      <section className="py-12 px-4 lg:px-10 bg-[#FFF7EB] border-y border-[#F7941D]/20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <div className="lg:col-span-5 space-y-4 text-center lg:text-left">
+            <span className="text-xs font-black text-[#F7941D] uppercase tracking-wider">
+              AI Voice Companion
+            </span>
+            <h2 className="text-3xl font-['Playfair_Display',serif] font-black text-[#163A6B]">
+              Meet Bhaskar AI Guide
+            </h2>
+            <p className="text-sm text-[#2F5F9F] font-medium leading-relaxed">
+              Experience natural multi-lingual voice guidance in Hindi, Marathi & English for Aarti timings, Prasadalaya, and temple history.
+            </p>
+
+            {/* Interactive Motion State Toggles */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-2">
+              {[
+                { id: 'greeting', label: '👋 Greeting (Namaste)' },
+                { id: 'talking', label: '🗣️ Talking Mode' },
+                { id: 'thinking', label: '🤔 Thinking State' },
+                { id: 'idle', label: '🧘 Idle Breathing' }
+              ].map((st) => (
+                <button
+                  key={st.id}
+                  onClick={() => setBhaskarState(st.id as any)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-extrabold transition-all active:scale-95 ${
+                    bhaskarState === st.id
+                      ? 'bg-[#F7941D] text-white shadow-sm'
+                      : 'bg-[#FFFFFF] text-[#163A6B] border border-[#F7941D]/20 hover:bg-[#FFFDF9]'
+                  }`}
+                >
+                  {st.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Interactive Avatar Speech Card */}
+          <div className="lg:col-span-7 bg-[#FFFFFF] border border-[#F7941D]/30 rounded-3xl p-6 shadow-[0_10px_30px_rgba(247,148,29,0.08)] flex flex-col sm:flex-row items-center gap-6">
+            <div className="relative flex-shrink-0">
+              <div className="w-24 h-24 rounded-3xl overflow-hidden border-4 border-[#F4B400] shadow-md relative">
+                <img src="/bhaskar.png" alt="Bhaskar AI Avatar" className="w-full h-full object-cover animate-avatar-breath" />
+                <div className="absolute inset-0 animate-avatar-blink pointer-events-none" />
+              </div>
+              <span className="absolute -bottom-2 right-0 bg-emerald-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" /> Live AI
+              </span>
+            </div>
+
+            <div className="space-y-3 text-center sm:text-left flex-1">
+              <div className="flex items-center justify-center sm:justify-start gap-2">
+                <h3 className="font-extrabold text-base text-[#163A6B]">Bhaskar AI Voice Assistant</h3>
+                <span className="text-xs text-[#F7941D] bg-[#FFF7EB] px-2 py-0.5 rounded-md font-extrabold">
+                  {bhaskarState.toUpperCase()}
+                </span>
+              </div>
+              
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={bhaskarState}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-sm text-[#163A6B] font-bold italic bg-[#FFF7EB] p-4 rounded-2xl border border-[#F7941D]/30 shadow-2xs leading-relaxed"
+                >
+                  {getBhaskarDialogue()}
+                </motion.p>
+              </AnimatePresence>
+            </div>
           </div>
 
         </div>
       </section>
 
-      {/* 3. Core Features Grid */}
+      {/* 4. Core Features Grid with Scroll Reveal */}
       <section id="features" className="py-16 px-4 lg:px-10 bg-[#FFFFFF]">
         <div className="max-w-7xl mx-auto space-y-12">
           
-          <div className="text-center space-y-3 max-w-2xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-3 max-w-2xl mx-auto"
+          >
             <span className="text-xs font-black text-[#F7941D] uppercase tracking-wider">
               Smart Features
             </span>
@@ -226,82 +395,40 @@ export const LandingPage: React.FC = () => {
             <p className="text-sm text-[#2F5F9F] font-medium">
               Designed specifically for devotees, families, and solo travelers visiting Shegaon.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            {/* Feature 1 */}
-            <div className="p-6 bg-[#FFFDF9] border border-[#F7941D]/20 rounded-3xl space-y-4 hover:shadow-lg hover:border-[#F7941D] transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-[#FFF7EB] border border-[#F7941D]/30 text-[#F7941D] flex items-center justify-center">
-                <Bot className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-['Playfair_Display',serif] font-black text-[#163A6B]">Bhaskar AI Voice Assistant</h3>
-              <p className="text-xs text-[#2F5F9F] leading-relaxed font-medium">
-                Ask questions about Aarti timings, temple rules, satvik prasad, or local routes. Bhaskar AI answers in voice in Hindi, Marathi & English!
-              </p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="p-6 bg-[#FFFDF9] border border-[#F7941D]/20 rounded-3xl space-y-4 hover:shadow-lg hover:border-[#F7941D] transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-[#FFF7EB] border border-[#F4B400]/40 text-[#E66A00] flex items-center justify-center">
-                <Clock className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-['Playfair_Display',serif] font-black text-[#163A6B]">Live Crowd & Queue Wait Time</h3>
-              <p className="text-xs text-[#2F5F9F] leading-relaxed font-medium">
-                Check live waiting time and queue density before heading for Darshan so you can plan the best time for your family.
-              </p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="p-6 bg-[#FFFDF9] border border-[#F7941D]/20 rounded-3xl space-y-4 hover:shadow-lg hover:border-[#F7941D] transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center">
-                <Compass className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-['Playfair_Display',serif] font-black text-[#163A6B]">1-Tap & Custom Yatra Planner</h3>
-              <p className="text-xs text-[#2F5F9F] leading-relaxed font-medium">
-                Generate an express 1-day yatra plan or type your custom Google Form-style sequence. AI creates your exact turn-by-turn route!
-              </p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="p-6 bg-[#FFFDF9] border border-[#F7941D]/20 rounded-3xl space-y-4 hover:shadow-lg hover:border-[#F7941D] transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-[#2F5F9F]/10 border border-[#2F5F9F]/20 text-[#2F5F9F] flex items-center justify-center">
-                <MapPin className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-['Playfair_Display',serif] font-black text-[#163A6B]">Live Map Navigation</h3>
-              <p className="text-xs text-[#2F5F9F] leading-relaxed font-medium">
-                Get GPS navigation for all 9 sacred places in Shegaon including Pragat Sthal, Anand Sagar, and Siddhapeeth Mahalaxmi Temple.
-              </p>
-            </div>
-
-            {/* Feature 5 */}
-            <div className="p-6 bg-[#FFFDF9] border border-[#F7941D]/20 rounded-3xl space-y-4 hover:shadow-lg hover:border-[#F7941D] transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-200 text-purple-600 flex items-center justify-center">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-['Playfair_Display',serif] font-black text-[#163A6B]">Prasadalaya & Satvik Food Finder</h3>
-              <p className="text-xs text-[#2F5F9F] leading-relaxed font-medium">
-                Find Sansthan Mahaprasad timings, pure satvik food spots, and hygienic dining options near the temple premises.
-              </p>
-            </div>
-
-            {/* Feature 6 */}
-            <div className="p-6 bg-[#FFFDF9] border border-[#F7941D]/20 rounded-3xl space-y-4 hover:shadow-lg hover:border-[#F7941D] transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-[#FFF7EB] border border-[#F7941D]/30 text-[#F7941D] flex items-center justify-center">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-['Playfair_Display',serif] font-black text-[#163A6B]">100% Independent & Free</h3>
-              <p className="text-xs text-[#2F5F9F] leading-relaxed font-medium">
-                Completely free app created for devotees. Zero ads, zero hidden costs, and simple to use for senior citizens.
-              </p>
-            </div>
-
+            {[
+              { icon: Bot, title: 'Bhaskar AI Voice Assistant', desc: 'Ask questions about Aarti timings, temple rules, satvik prasad, or local routes in voice in Hindi, Marathi & English!' },
+              { icon: Clock, title: 'Live Crowd & Queue Wait Time', desc: 'Check live waiting time and queue density before heading for Darshan so you can plan the best time for your family.' },
+              { icon: Compass, title: '1-Tap & Custom Yatra Planner', desc: 'Generate an express 1-day yatra plan or type your custom sequence. AI creates your exact turn-by-turn route!' },
+              { icon: MapPin, title: 'Live Map Navigation', desc: 'Get GPS navigation for all 9 sacred places in Shegaon including Pragat Sthal, Anand Sagar, and Siddhapeeth Mahalaxmi Temple.' },
+              { icon: Sparkles, title: 'Prasadalaya & Satvik Food Finder', desc: 'Find Sansthan Mahaprasad timings, pure satvik food spots, and hygienic dining options near the temple premises.' },
+              { icon: ShieldCheck, title: '100% Independent & Free', desc: 'Completely free app created for devotees. Zero ads, zero hidden costs, and simple to use for senior citizens.' }
+            ].map((ft, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="p-6 bg-[#FFFDF9] border border-[#F7941D]/20 rounded-3xl space-y-4 hover:shadow-[0_15px_35px_rgba(247,148,29,0.12)] hover:border-[#F7941D] transition-all cursor-pointer"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-[#FFF7EB] border border-[#F7941D]/30 text-[#F7941D] flex items-center justify-center shadow-2xs">
+                  <ft.icon className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-['Playfair_Display',serif] font-black text-[#163A6B]">{ft.title}</h3>
+                <p className="text-xs text-[#2F5F9F] leading-relaxed font-medium">{ft.desc}</p>
+              </motion.div>
+            ))}
           </div>
+
         </div>
       </section>
 
-      {/* 4. Popular in Shegaon & Weather / Events Section */}
-      <section id="places" className="py-12 px-4 lg:px-10">
+      {/* 5. Popular in Shegaon & Weather / Events Section */}
+      <section id="places" className="py-12 px-4 lg:px-10 bg-[#FFFDF9]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Left Column: Popular in Shegaon Cards Grid */}
@@ -324,9 +451,12 @@ export const LandingPage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               
               {/* Card 1 */}
-              <div className="bg-[#FFFFFF] border border-[#F7941D]/20 rounded-3xl overflow-hidden shadow-[0_6px_20px_rgba(247,148,29,0.06)] hover:shadow-lg transition-all group">
+              <motion.div 
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="bg-[#FFFFFF] border border-[#F7941D]/20 rounded-3xl overflow-hidden shadow-[0_6px_20px_rgba(247,148,29,0.06)] hover:shadow-xl transition-all group cursor-pointer"
+              >
                 <div className="relative h-44 overflow-hidden">
-                  <img src="/gajanan_temple.png" alt="Shri Gajanan Maharaj Temple" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src="/gajanan_temple.png" alt="Shri Gajanan Maharaj Temple" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   <span className="absolute top-3 right-3 bg-[#FFF7EB] text-[#E66A00] text-[10px] font-black px-2.5 py-1 rounded-full border border-[#F7941D]/30">
                     🛕 Temple
                   </span>
@@ -345,12 +475,15 @@ export const LandingPage: React.FC = () => {
                     </span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Card 2 */}
-              <div className="bg-[#FFFFFF] border border-[#F7941D]/20 rounded-3xl overflow-hidden shadow-[0_6px_20px_rgba(247,148,29,0.06)] hover:shadow-lg transition-all group">
+              <motion.div 
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="bg-[#FFFFFF] border border-[#F7941D]/20 rounded-3xl overflow-hidden shadow-[0_6px_20px_rgba(247,148,29,0.06)] hover:shadow-xl transition-all group cursor-pointer"
+              >
                 <div className="relative h-44 overflow-hidden">
-                  <img src="/slide2.png" alt="Hotel Sunanda Palace" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src="/slide2.png" alt="Hotel Sunanda Palace" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   <span className="absolute top-3 right-3 bg-blue-50 text-[#2F5F9F] text-[10px] font-black px-2.5 py-1 rounded-full border border-blue-200">
                     🏨 Hotel
                   </span>
@@ -369,12 +502,15 @@ export const LandingPage: React.FC = () => {
                     </span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Card 3 */}
-              <div className="bg-[#FFFFFF] border border-[#F7941D]/20 rounded-3xl overflow-hidden shadow-[0_6px_20px_rgba(247,148,29,0.06)] hover:shadow-lg transition-all group">
+              <motion.div 
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="bg-[#FFFFFF] border border-[#F7941D]/20 rounded-3xl overflow-hidden shadow-[0_6px_20px_rgba(247,148,29,0.06)] hover:shadow-xl transition-all group cursor-pointer"
+              >
                 <div className="relative h-44 overflow-hidden">
-                  <img src="/slide1.png" alt="Gajanan Prasad Thali" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src="/slide1.png" alt="Gajanan Prasad Thali" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   <span className="absolute top-3 right-3 bg-emerald-50 text-emerald-800 text-[10px] font-black px-2.5 py-1 rounded-full border border-emerald-200">
                     🍱 Food
                   </span>
@@ -393,12 +529,15 @@ export const LandingPage: React.FC = () => {
                     </span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Card 4 */}
-              <div className="bg-[#FFFFFF] border border-[#F7941D]/20 rounded-3xl overflow-hidden shadow-[0_6px_20px_rgba(247,148,29,0.06)] hover:shadow-lg transition-all group">
+              <motion.div 
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="bg-[#FFFFFF] border border-[#F7941D]/20 rounded-3xl overflow-hidden shadow-[0_6px_20px_rgba(247,148,29,0.06)] hover:shadow-xl transition-all group cursor-pointer"
+              >
                 <div className="relative h-44 overflow-hidden">
-                  <img src="/slide3.png" alt="Shivaji Park" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src="/slide3.png" alt="Shivaji Park" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   <span className="absolute top-3 right-3 bg-purple-50 text-purple-800 text-[10px] font-black px-2.5 py-1 rounded-full border border-purple-200">
                     🎡 Attraction
                   </span>
@@ -417,7 +556,7 @@ export const LandingPage: React.FC = () => {
                     </span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
             </div>
 
@@ -427,10 +566,13 @@ export const LandingPage: React.FC = () => {
           <div className="lg:col-span-4 space-y-6">
             
             {/* Widget 1: Weather in Shegaon */}
-            <div className="bg-[#FFFFFF] border border-[#F7941D]/20 rounded-3xl p-5 shadow-[0_6px_20px_rgba(247,148,29,0.05)] space-y-4">
+            <motion.div 
+              whileHover={{ y: -4 }}
+              className="bg-[#FFFFFF] border border-[#F7941D]/20 rounded-3xl p-5 shadow-[0_6px_20px_rgba(247,148,29,0.05)] space-y-4"
+            >
               <div className="flex items-center justify-between border-b border-[#FFF7EB] pb-3">
                 <div className="flex items-center gap-2">
-                  <Sun className="w-5 h-5 text-[#F4B400]" />
+                  <Sun className="w-5 h-5 text-[#F4B400] animate-spin" style={{ animationDuration: '15s' }} />
                   <h3 className="font-extrabold text-sm text-[#163A6B]">Weather in Shegaon</h3>
                 </div>
                 <span className="text-[10px] font-extrabold bg-[#FFF7EB] text-[#E66A00] px-2 py-0.5 rounded">Live</span>
@@ -451,10 +593,13 @@ export const LandingPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Widget 2: Upcoming Events */}
-            <div className="bg-[#FFFFFF] border border-[#F7941D]/20 rounded-3xl p-5 shadow-[0_6px_20px_rgba(247,148,29,0.05)] space-y-4">
+            <motion.div 
+              whileHover={{ y: -4 }}
+              className="bg-[#FFFFFF] border border-[#F7941D]/20 rounded-3xl p-5 shadow-[0_6px_20px_rgba(247,148,29,0.05)] space-y-4"
+            >
               <div className="flex items-center justify-between border-b border-[#FFF7EB] pb-3">
                 <h3 className="font-extrabold text-sm text-[#163A6B] flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-[#F7941D]" /> Upcoming Events
@@ -472,80 +617,42 @@ export const LandingPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Widget 3: Bhaskar AI Voice Card */}
-            <div className="bg-gradient-to-br from-[#FFF7EB] to-[#FFFDF9] border border-[#F7941D]/30 rounded-3xl p-5 shadow-sm space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-[#F7941D] text-white flex items-center justify-center font-bold">
-                  <Bot className="w-6 h-6" />
+          </div>
+
+        </div>
+      </section>
+
+      {/* 6. Trust & Security Value Pillars Bar */}
+      <section className="py-10 px-4 lg:px-10">
+        <div className="max-w-7xl mx-auto bg-[#FFF7EB] border border-[#F7941D]/30 rounded-3xl p-6 sm:p-8 shadow-2xs">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: ShieldCheck, title: 'Trusted & Verified', desc: '100% verified places' },
+              { icon: Navigation, title: 'Smart Itinerary', desc: 'AI powered trip planning' },
+              { icon: Headphones, title: '24/7 Support', desc: 'We are always here' },
+              { icon: Lock, title: 'Secure & Safe', desc: 'Your safety is our priority' }
+            ].map((pillar, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ scale: 1.03 }}
+                className="flex items-center gap-3"
+              >
+                <div className="w-11 h-11 rounded-2xl bg-[#FFFFFF] border border-[#F7941D]/30 text-[#F7941D] flex items-center justify-center shadow-2xs flex-shrink-0">
+                  <pillar.icon className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-sm text-[#163A6B]">Ask Bhaskar AI Voice</h4>
-                  <p className="text-[11px] text-[#2F5F9F] font-medium">Multi-lingual Voice Assistance</p>
+                  <h4 className="font-black text-xs text-[#163A6B]">{pillar.title}</h4>
+                  <p className="text-[11px] text-[#2F5F9F] font-medium">{pillar.desc}</p>
                 </div>
-              </div>
-
-              <p className="text-xs text-[#163A6B] font-bold italic bg-[#FFFFFF] p-3 rounded-xl border border-[#F7941D]/20">
-                "Subah Kakad Aarti 5:30 AM ko hoti hai. Prasadalaya me Satvik Mahaprasad dopahar 11:30 se milta hai!"
-              </p>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* 5. Trust & Security Value Pillars Bar */}
-      <section className="py-10 px-4 lg:px-10">
-        <div className="max-w-7xl mx-auto bg-[#FFF7EB] border border-[#F7941D]/30 rounded-3xl p-6 sm:p-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-[#FFFFFF] border border-[#F7941D]/30 text-[#F7941D] flex items-center justify-center shadow-2xs flex-shrink-0">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="font-black text-xs text-[#163A6B]">Trusted & Verified</h4>
-                <p className="text-[11px] text-[#2F5F9F] font-medium">100% verified places</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-[#FFFFFF] border border-[#F7941D]/30 text-[#F7941D] flex items-center justify-center shadow-2xs flex-shrink-0">
-                <Navigation className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="font-black text-xs text-[#163A6B]">Smart Itinerary</h4>
-                <p className="text-[11px] text-[#2F5F9F] font-medium">AI powered trip planning</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-[#FFFFFF] border border-[#F7941D]/30 text-[#F7941D] flex items-center justify-center shadow-2xs flex-shrink-0">
-                <Headphones className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="font-black text-xs text-[#163A6B]">24/7 Support</h4>
-                <p className="text-[11px] text-[#2F5F9F] font-medium">We are always here</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-[#FFFFFF] border border-[#F7941D]/30 text-[#F7941D] flex items-center justify-center shadow-2xs flex-shrink-0">
-                <Lock className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="font-black text-xs text-[#163A6B]">Secure & Safe</h4>
-                <p className="text-[11px] text-[#2F5F9F] font-medium">Your safety is our priority</p>
-              </div>
-            </div>
-
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 6. 9 Shegaon Sacred Destinations Detailed Section */}
+      {/* 7. 9 Shegaon Sacred Destinations Detailed Section */}
       <section id="planner" className="py-14 px-4 lg:px-10 bg-[#FFFFFF]">
         <div className="max-w-7xl mx-auto space-y-10">
           <div className="text-center space-y-2">
@@ -569,7 +676,11 @@ export const LandingPage: React.FC = () => {
               { name: 'Mauli Water Park', cat: 'Water Park', desc: 'Popular family leisure water park near Shegaon.' },
               { name: 'Shri Gomaji Maharaj Temple (Nagzari)', cat: 'Temple', desc: 'Serene samadhi shrine in Nagzari village.' }
             ].map((item, idx) => (
-              <div key={idx} className="p-4 bg-[#FFFDF9] border border-[#F7941D]/20 rounded-2xl space-y-1.5 shadow-2xs hover:border-[#F7941D] transition-all">
+              <motion.div
+                key={idx}
+                whileHover={{ y: -5, scale: 1.01 }}
+                className="p-4 bg-[#FFFDF9] border border-[#F7941D]/20 rounded-2xl space-y-1.5 shadow-2xs hover:border-[#F7941D] transition-all cursor-pointer"
+              >
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-black uppercase tracking-wider text-[#F7941D] bg-[#FFF7EB] px-2 py-0.5 rounded">
                     {item.cat}
@@ -578,13 +689,13 @@ export const LandingPage: React.FC = () => {
                 </div>
                 <h3 className="font-extrabold text-sm text-[#163A6B]">{item.name}</h3>
                 <p className="text-xs text-[#2F5F9F] font-medium leading-relaxed">{item.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 7. APK Direct Download & Installation Section */}
+      {/* 8. APK Direct Download & Installation Section */}
       <section id="download" className="py-16 px-4 lg:px-10 bg-[#FFF7EB]">
         <div className="max-w-5xl mx-auto bg-[#FFFFFF] border-2 border-[#F7941D]/40 rounded-[36px] p-6 sm:p-12 shadow-xl space-y-10">
           
@@ -615,13 +726,15 @@ export const LandingPage: React.FC = () => {
               </div>
             </div>
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: '0 8px 25px rgba(230,106,0,0.4)' }}
+              whileTap={{ scale: 0.95 }}
               onClick={handleDownload}
-              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#F7941D] via-[#E66A00] to-[#F7941D] hover:from-[#E66A00] hover:to-[#F7941D] text-white font-black text-sm rounded-full shadow-[0_6px_20px_rgba(247,148,29,0.4)] hover:scale-105 transition-all flex items-center justify-center gap-2 active:scale-95 flex-shrink-0"
+              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#F7941D] via-[#E66A00] to-[#F7941D] text-white font-black text-sm rounded-full shadow-[0_6px_20px_rgba(247,148,29,0.4)] transition-all flex items-center justify-center gap-2 flex-shrink-0"
             >
               <Download className="w-5 h-5 stroke-[2.5px]" />
               <span>Download APK File</span>
-            </button>
+            </motion.button>
           </div>
 
           {/* 3 Step Installation Instructions */}
@@ -655,7 +768,7 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 8. Legal Disclaimer Footer & Modals */}
+      {/* 9. Legal Disclaimer Footer & Modals */}
       <footer className="bg-[#FFFFFF] border-t border-[#F7941D]/20 py-10 px-4 lg:px-10 text-center space-y-4">
         <div className="max-w-4xl mx-auto space-y-4">
           
@@ -710,7 +823,12 @@ export const LandingPage: React.FC = () => {
       {/* Website Legal Modals Overlay */}
       {activeLegalModal && (
         <div className="fixed inset-0 z-50 bg-[#163A6B]/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#FFFFFF] rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-6 shadow-2xl relative animate-scaleUp text-left border border-[#F7941D]/20">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="bg-[#FFFFFF] rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-6 shadow-2xl relative text-left border border-[#F7941D]/20"
+          >
             <button
               onClick={() => setActiveLegalModal(null)}
               className="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#FFF7EB] text-[#163A6B] flex items-center justify-center hover:bg-[#F7941D] hover:text-white active:scale-95 transition-all"
@@ -838,7 +956,7 @@ export const LandingPage: React.FC = () => {
               </div>
             )}
 
-          </div>
+          </motion.div>
         </div>
       )}
 
