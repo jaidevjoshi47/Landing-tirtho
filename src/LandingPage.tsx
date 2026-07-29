@@ -827,7 +827,7 @@ export const LandingPage: React.FC = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-[#FFFFFF] rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-6 shadow-2xl relative text-left border border-[#F7941D]/20"
+            className="bg-[#FFFFFF] rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto no-scrollbar p-6 sm:p-8 space-y-6 shadow-2xl relative text-left border border-[#F7941D]/20"
           >
             <button
               onClick={() => setActiveLegalModal(null)}

@@ -24,6 +24,15 @@ body {
   overflow-x: hidden;
 }
 
+/* Hide scrollbar visually while keeping full scroll functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 /* --- Cinematic & Motion Utility Animations --- */
 
 /* Sunlight Ray Glow Sweep */
