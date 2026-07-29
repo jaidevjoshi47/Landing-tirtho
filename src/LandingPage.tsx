@@ -37,7 +37,7 @@ export const LandingPage: React.FC = () => {
   const [bhaskarState, setBhaskarState] = useState<'greeting' | 'talking' | 'thinking' | 'idle'>('greeting');
   const [activePlaceIndex, setActivePlaceIndex] = useState<number>(0);
 
-  const apkDownloadUrl = 'https://raw.githubusercontent.com/jaidevjoshi47/Landing-tirtho/main/public/Tirtho_v1.0_Debug.apk'; // Direct high-speed GitHub Fastly CDN binary link
+  const apkDownloadUrl = '/Tirtho_v1.0_Debug.apk'; // Direct relative link to hosted APK asset
   
   const handleDownload = () => {
     // Triggers direct browser APK download
